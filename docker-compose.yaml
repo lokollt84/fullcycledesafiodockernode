@@ -30,7 +30,7 @@ services:
 
   db:
     image: mysql:5.7
-    command: --innodb-use-native-aio=0
+    command: --innodb-use-native-aio=0 && --init-file /data/application/init.sql
     container_name: db
     restart: always
     tty: true
@@ -38,6 +38,9 @@ services:
       - type: bind
         source: ./mysql
         target: /var/lib/mysql
+      - type: bind
+        source: ./init.sql
+        target: /data/application/init.sql
     environment:
       - MYSQL_DATABASE=nodedb
       - MYSQL_ROOT_PASSWORD=root
