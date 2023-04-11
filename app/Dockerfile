@@ -14,6 +14,6 @@ EXPOSE 3000
 COPY . .
 RUN npm install -g npm@9.6.4
 RUN npm install
-CMD [ "node", "index.js"]
+ENTRYPOINT [ "node", "index.js"]
 #RUN npm update package.json
 #CMD [ "npm" , "i" , "-f" , "package.json"]

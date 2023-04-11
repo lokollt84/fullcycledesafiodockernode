@@ -4,9 +4,21 @@ const port = 3000
 const config = {
     host: 'db',
     user: 'root',
-    password: 'root',
+    password: 'root12',
     database: 'nodedb'
 }
+const config_root = {
+    host: 'db',
+    user: 'root',
+    password: 'root12',
+    database: 'nodedb'
+}
+const mysql = require('mysql')
+const connection2 = mysql.createConnection(config_root)
+const sql_root = 'CREATE TABLE IF NOT EXISTS people (id int not null auto_increment, name varchar(255), primary key(id));'
+connection2.query(sql_root)
+connection2.end()
+
 
 app.get('/', (req, res) => {
     const mysql = require('mysql')
