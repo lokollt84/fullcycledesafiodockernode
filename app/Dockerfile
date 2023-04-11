@@ -1,12 +1,8 @@
 FROM node:15
 
 WORKDIR /usr/src/app
+
 RUN apt-get update && apt-get install -y wget
-COPY . .
-RUN npm install --quiet
-COPY . .
-
-
 
 ENV DOCKERIZE_VERSION v0.6.1
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
@@ -15,4 +11,9 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 EXPOSE 3000
 
-#CMD ["node", "index.js"]
+COPY . .
+RUN npm install -g npm@9.6.4
+RUN npm install
+CMD [ "node", "index.js"]
+#RUN npm update package.json
+#CMD [ "npm" , "i" , "-f" , "package.json"]
