@@ -18,7 +18,7 @@ services:
       context: app
     container_name: app
     tty: true
-    entrypoint: dockerize -wait tcp://db:3306 -timeout 40s bash -c "./commands.sh"
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 40s bash -c "npm install && node index.js"
     #networks:
     #  - desafio-node-network
     volumes:
