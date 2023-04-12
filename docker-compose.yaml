@@ -6,8 +6,8 @@ services:
       context: nginx
     container_name: gateway
     #entrypoint: dockerize -wait tcp://app:3000 -timeout 50s;
-    networks:
-      - desafio-node-network
+    #networks:
+    #  - desafio-node-network
     tty: true
     ports:
       - "8080:80"
@@ -19,15 +19,15 @@ services:
 
     container_name: app
     tty: true
-    entrypoint: dockerize -wait tcp://db:3306 -timeout 40s node index.js
-    networks:
-      - desafio-node-network
-    #volumes:
-    #  - ./app:/usr/src/app
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 40s sh commands.sh
+    #networks:
+    #  - desafio-node-network
+    volumes:
+      - ./app:/usr/src/app
     depends_on:
       - db
-    ports: 
-      - "3000"
+    #ports: 
+    #  - "3000"
  
   #db:
   #  image: mysql:5.7
@@ -55,13 +55,15 @@ services:
       - ./mysql:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=nodedb
-      - MYSQL_USER=ibere
       - MYSQL_PASSWORD=test
       - MYSQL_ROOT_PASSWORD=root12
-    networks:
-      - desafio-node-network
+    ports:
+      - "3306"
+    #networks:
+    #  - desafio-node-network
 
-networks:
-  desafio-node-network:
-    driver: bridge
+#networks:
+#  desafio-node-network:
+#    driver: bridge
+
   

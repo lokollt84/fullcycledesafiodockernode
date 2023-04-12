@@ -1,4 +1,4 @@
-FROM node:15
+FROM node:16
 
 WORKDIR /usr/src/app
 
@@ -10,10 +10,13 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 EXPOSE 3000
-
 COPY . .
-RUN npm install -g npm@9.6.4
-RUN npm install
-ENTRYPOINT [ "node", "index.js"]
+
+# para igualar o usuario da maquina com o do container e nao dar erro de permissao
+# desde que o id do usuario seja o mesmo que a do usuario do container (veja espec da imagem no hub)
+USER root
+RUN chmod 777 commands.sh
+RUN ["chmod", "+x", "commands.sh"]
+
 #RUN npm update package.json
 #CMD [ "npm" , "i" , "-f" , "package.json"]
